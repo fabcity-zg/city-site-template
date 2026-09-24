@@ -139,8 +139,10 @@ a:hover{color:var(--fab-black);text-decoration-color:var(--city);text-decoration
 .cta-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
 .hero-visual{position:relative;aspect-ratio:.866;width:min(100%,440px);justify-self:end}
 .hex-back{position:absolute;inset:0;background:var(--city);clip-path:var(--hexclip);transform:translate(7%,6%)}
-.hex-img,.hex-ph{position:absolute;inset:0;width:100%;height:100%;clip-path:var(--hexclip)}
-.hex-img{object-fit:cover;object-position:77% center}
+.hex-photo,.hex-ph{position:absolute;inset:0;width:100%;height:100%;clip-path:var(--hexclip)}
+.hex-photo{overflow:hidden;background:#a8b8c8}
+.hex-sky{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:0% center}
+.hex-img{position:absolute;top:100px;left:0;width:100%;height:100%;object-fit:cover;object-position:77% center;mask-image:linear-gradient(to bottom,transparent 0,#000 32px)}
 .hex-ph{background:var(--city);display:grid;place-items:center;color:var(--fab-offwhite);font:500 clamp(64px,8vw,110px) var(--font-display)}
 @media (max-width:900px){
   .hero-grid{grid-template-columns:1fr}
@@ -546,7 +548,7 @@ function renderHero(c, visibleSections){
     if(email) ctas.push('<a class="btn btn-ghost" href="mailto:'+esc(email)+'">'+esc(L("contact"))+"</a>");
   }
   const visual = c.hero_image
-    ? '<img class="hex-img" src="'+esc(c.hero_image)+'" alt="'+esc(TYPE_LABEL + " " + c.name)+'" onerror="this.outerHTML=\'<div class=&quot;hex-ph&quot;>'+esc(initials(c.name))+'</div>\'">'
+    ? '<div class="hex-photo"><img class="hex-sky" src="'+esc(c.hero_image)+'" alt="" aria-hidden="true"><img class="hex-img" src="'+esc(c.hero_image)+'" alt="'+esc(TYPE_LABEL + " " + c.name)+'" onerror="this.parentElement.outerHTML=\'<div class=&quot;hex-ph&quot;>'+esc(initials(c.name))+'</div>\'"></div>'
     : '<div class="hex-ph" aria-hidden="true">'+esc(initials(c.name))+"</div>";
   $("#hero").innerHTML = '<div class="wrap hero-grid"><div class="hero-copy">'
     + '<div class="tags-row">'+tags.join("")+"</div>"
